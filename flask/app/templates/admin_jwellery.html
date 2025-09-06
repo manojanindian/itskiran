@@ -1,28 +1,50 @@
-<h1 style="color:#2f8da3;text-align:center;">Jwellery Management</h1>
-<div style="text-align:center;margin-top:20px;">
-  <form method="post" enctype="multipart/form-data">
-    <input type="file" name="images" multiple accept="image/*"><br><br>
-    <input type="text" name="price" placeholder="Price (optional)"><br><br>
-    <input type="number" name="quantity" placeholder="Quantity (default 0)" min="0" value="0"><br><br>
-    <button type="submit">Upload Images</button>
-  </form>
+{% extends 'admin_base.html' %}
+{% block title %}Jwellery Management{% endblock %}
+{% block content %}
+<h1 class="text-center text-primary">Jwellery Management</h1>
+<div class="row justify-content-center mb-4">
+  <div class="col-md-6">
+    <form method="post" enctype="multipart/form-data" class="card card-body">
+      <div class="row g-2 align-items-center mb-3">
+        <div class="col">
+          <input type="file" name="images" multiple accept="image/*" class="form-control">
+        </div>
+        <div class="col-auto">
+          <button type="submit" class="btn btn-primary">Upload Images</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
 <hr>
-<div style="text-align:center;">
-  <h2 style="color:#2f8da3;">Uploaded Images</h2>
+<h2 class="text-center text-primary">Uploaded Images</h2>
+<div class="row" style="gap:20px;">
   {% for img in images %}
-    <div style="display:inline-block;margin:10px;">
-      <img src="{{ url_for('static', filename=img.image_path) }}" width="200" style="border-radius:8px;"><br>
-      <span>ID: {{ img.id }}</span><br>
-      <span>Date: {{ img.uploaded_date.strftime('%Y-%m-%d %H:%M') }}</span><br>
-      <span>Price: ₹{{ '%.2f'|format(img.price) if img.price is not none else 'N/A' }}</span><br>
-      <span>Quantity: {{ img.quantity }}</span><br>
-      <form method="post" style="margin-top:5px;">
-        <input type="hidden" name="update_id" value="{{ img.id }}">
-        <input type="text" name="update_price" placeholder="Update Price" value="{{ img.price if img.price is not none else '' }}">
-        <input type="number" name="update_quantity" placeholder="Update Quantity" min="0" value="{{ img.quantity }}">
-        <button type="submit">Update</button>
-      </form>
+    <div class="col-6 col-sm-4 col-md-3 col-lg-2 mb-3">
+      <div class="card h-100" style="max-width: 140px;">
+        <img src="{{ url_for('static', filename=img.image_path) }}" class="card-img-top" style="border-radius:8px; max-height:100px; object-fit:cover;">
+        <div class="card-body p-2 text-center" style="font-size: 0.85em;">
+          <span>ID: {{ img.id }}</span><br>
+          <span>Date: {{ img.uploaded_date.strftime('%Y-%m-%d %H:%M') }}</span><br>
+          <span>Price: ₹{{ '%.2f'|format(img.price) if img.price is not none else 'N/A' }}</span><br>
+          <span>Quantity: {{ img.quantity }}</span><br>
+          <form method="post" class="mt-2">
+            <input type="hidden" name="update_id" value="{{ img.id }}">
+            <div class="row g-1 align-items-center">
+              <div class="col">
+                <input type="text" name="update_price" placeholder="Update Price" value="{{ img.price if img.price is not none else '' }}" class="form-control form-control-sm" style="min-width:60px; font-size:0.85em;">
+              </div>
+              <div class="col">
+                <input type="number" name="update_quantity" placeholder="Qty" min="0" value="{{ img.quantity }}" class="form-control form-control-sm" style="min-width:50px; font-size:0.85em;">
+              </div>
+              <div class="col-auto">
+                <button type="submit" class="btn btn-sm btn-primary" style="font-size:0.85em;">Update</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   {% endfor %}
 </div>
+{% endblock %}
