@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  flask:
+    build: flask
+    ports:
+      - "5000:5000"
+    restart: always
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - flask
+    restart: always

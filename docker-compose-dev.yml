@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  flask:
+    build:
+      context: ./flask
+      dockerfile: Dockerfile
+    volumes:
+      - ./flask/app:/itskiran  # Mount source code into container
+    command: gunicorn --workers=3 --reload --bind=0.0.0.0:5000 main:app
+    ports:
+      - "5000:5000"  # expose Flask directly (optional, for debugging)
