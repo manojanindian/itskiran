@@ -37,6 +37,10 @@
               <div class="col">
                 <input type="number" name="update_quantity" placeholder="Qty" min="0" value="{{ img.quantity }}" class="form-control form-control-sm" style="min-width:50px; font-size:0.85em;">
               </div>
+              <div class="col-auto d-flex align-items-center">
+                <input type="checkbox" name="update_published" {% if img.published %}checked{% endif %} class="form-check-input me-1">
+                <label class="form-check-label" style="font-size:0.85em;">Published</label>
+              </div>
               <div class="col-auto">
                 <button type="submit" class="btn btn-sm btn-primary" style="font-size:0.85em;">Update</button>
               </div>
